@@ -184,17 +184,35 @@ footer p{margin:.4em 0}
 body{padding-bottom:90px}
 @media (prefers-reduced-motion:reduce){.fpill .dot{animation:none}}
 @media(max-width:380px){.fpill{gap:10px;padding-left:14px}.fpill .go{padding:11px 16px}}
+
+/* ===== Sticky header (strip + nav) + mobile menu ===== */
+.topbar{position:sticky;top:0;z-index:80}
+.topbar nav{position:static}
+.menu-btn{display:none;background:none;border:0;color:#fff;font-size:1.6rem;line-height:1;padding:6px 8px;cursor:pointer;margin-left:6px}
+@media(max-width:720px){
+  .strip{font-size:.8rem;padding:6px 10px}
+  .menu-btn{display:block;margin-left:0;padding:6px 4px}
+  nav .links{overflow:visible}
+  .topbar nav .wrap{position:relative}
+  .links.open{position:absolute;top:56px;left:0;right:0;flex-direction:column;background:var(--navy);padding:8px 16px 14px;gap:2px;box-shadow:0 12px 24px rgba(0,0,0,.3)}
+  .links.open a:not(.cta){display:block;padding:12px 8px;border-bottom:1px solid rgba(255,255,255,.08);font-size:1rem}
+  .links.open a.cta{display:none}
+
+}
+.mvote{display:none !important}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
+<div class="topbar">
 <div class="strip">Voting is open until <b>8 December</b><span id="daysleft"></span> · check your IEEE email <a class="vote-link" href="#vote">Vote now ↗</a></div>
 
 <nav aria-label="Main">
   <div class="wrap">
     <a class="brand" href="#top"><span class="badge">GST</span><span class="name">Prof. G S Tomar</span></a>
-    <div class="links">
+    <a class="btn gold mvote vote-link" href="#vote" style="margin-left:auto;padding:9px 14px;font-size:.9rem">Vote now ↗</a>
+      <div class="links" id="navlinks">
       <a href="#vote">How to vote</a>
       <a href="#record">Record</a>
       <a href="#priorities">Priorities</a>
@@ -203,8 +221,10 @@ body{padding-bottom:90px}
       <a href="#contact">Contact</a>
       <a class="cta vote-link" href="#vote">Vote now ↗</a>
     </div>
+      <button class="menu-btn" id="menubtn" aria-label="Open menu" aria-expanded="false">☰</button>
   </div>
 </nav>
+</div>
 
 <header class="hero" id="top">
   <div class="wrap">
@@ -429,6 +449,10 @@ try{const end=new Date('2026-12-08T23:59:59+05:30');const d=Math.ceil((end-new D
 const el=document.getElementById('daysleft');
 if(d>1)el.innerHTML=' · <b>'+d+' days left</b>';else if(d===1)el.innerHTML=' · <b>last day</b>';
 else{document.querySelector('.strip').style.display='none';document.querySelector('.fpill').style.display='none';}}catch(e){}
+
+const mb=document.getElementById('menubtn'),nl=document.getElementById('navlinks');
+mb.onclick=()=>{const o=nl.classList.toggle('open');mb.textContent=o?'✕':'☰';mb.setAttribute('aria-expanded',o)};
+nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nl.classList.remove('open');mb.textContent='☰';mb.setAttribute('aria-expanded',false)}));
 const pageUrl = SITE_URL || location.href.split('#')[0];
 if (VOTE_URL) document.querySelectorAll('.vote-link').forEach(a => { a.href = VOTE_URL; a.target = "_blank"; a.rel = "noopener"; });
 
