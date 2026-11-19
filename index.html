@@ -140,6 +140,38 @@ footer{background:#081634;color:#9fb0d3;font-size:.86rem;padding:28px 0}
 footer p{margin:.4em 0}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
 .toast.show{opacity:1}
+/* ===== Mobile refinements ===== */
+.mbar{display:none}
+@media(max-width:720px){
+  body{font-size:16px;padding-bottom:76px}
+  section{padding:48px 0}
+  nav .wrap{height:56px}
+  nav .links a:not(.cta){display:none}
+  nav .links a.cta{padding:9px 14px}
+  .brand span.name{display:inline}
+  .hero{padding:32px 0 36px}
+  .hero::after{display:none}
+  .portrait img{width:min(240px,64vw)}
+  .portrait .cap{left:-8px;bottom:14px}
+  .hero h1{margin-top:.35em}
+  .btns{flex-direction:column}
+  .btns .btn{width:100%;justify-content:center}
+  .share .btn{flex:1 1 45%;justify-content:center}
+  .datebox{width:100%}
+  .steps li{padding:16px 16px 16px 60px}
+  .prio div{padding:16px 16px 16px 66px}
+  .panel{padding:20px}
+  .about blockquote{font-size:1.1rem}
+  .mbar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(13,35,80,.97);box-shadow:0 -6px 20px rgba(0,0,0,.2)}
+  .mbar a{flex:1;text-align:center;padding:12px;border-radius:8px;font-weight:700;text-decoration:none}
+  .mbar .v{background:var(--gold);color:var(--navy)}
+  .mbar .s{border:2px solid rgba(255,255,255,.6);color:#fff}
+  .toast{bottom:90px}
+}
+@media(max-width:360px){
+  .brand span.name{display:none}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -368,6 +400,8 @@ footer p{margin:.4em 0}
   </div>
 </footer>
 
+<div class="mbar"><a class="v vote-link" href="#vote">Vote now ↗</a><a class="s" id="mb-wa" href="#share">Share</a></div>
+
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -381,6 +415,7 @@ if (VOTE_URL) document.querySelectorAll('.vote-link').forEach(a => { a.href = VO
 
 const msg = "Please vote for Prof. Geetam Singh Tomar (SMIEEE, Chair, IEEE MP Section) for IEEE India Council Chair-Elect 2027. Voting closes 8 December. Details: " + pageUrl;
 document.getElementById('sh-wa').href = "https://wa.me/?text=" + encodeURIComponent(msg);
+const mbw=document.getElementById('mb-wa'); mbw.href=document.getElementById('sh-wa').href; mbw.target="_blank"; mbw.rel="noopener";
 document.getElementById('sh-li').href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(pageUrl);
 document.getElementById('sh-em').href = "mailto:?subject=" + encodeURIComponent("IEEE India Council Chair-Elect 2027 — Prof. G S Tomar") + "&body=" + encodeURIComponent(msg);
 ['sh-wa','sh-li'].forEach(id => { const a = document.getElementById(id); a.target = "_blank"; a.rel = "noopener"; });
