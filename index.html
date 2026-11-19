@@ -138,12 +138,11 @@ ul.plain li{margin:4px 0}
 .closing .btns{justify-content:center}
 footer{background:#081634;color:#9fb0d3;font-size:.86rem;padding:28px 0}
 footer p{margin:.4em 0}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:8px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
 .toast.show{opacity:1}
 /* ===== Mobile refinements ===== */
-.mbar{display:none}
 @media(max-width:720px){
-  body{font-size:16px;padding-bottom:76px}
+  body{font-size:16px}
   section{padding:48px 0}
   nav .wrap{height:56px}
   nav .links a:not(.cta){display:none}
@@ -162,20 +161,35 @@ footer p{margin:.4em 0}
   .prio div{padding:16px 16px 16px 66px}
   .panel{padding:20px}
   .about blockquote{font-size:1.1rem}
-  .mbar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(13,35,80,.97);box-shadow:0 -6px 20px rgba(0,0,0,.2)}
-  .mbar a{flex:1;text-align:center;padding:12px;border-radius:8px;font-weight:700;text-decoration:none}
-  .mbar .v{background:var(--gold);color:var(--navy)}
-  .mbar .s{border:2px solid rgba(255,255,255,.6);color:#fff}
-  .toast{bottom:90px}
+  
 }
 @media(max-width:360px){
   .brand span.name{display:none}
   .metrics{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ===== Top strip + floating vote pill ===== */
+.strip{background:#081634;color:#e6ecf8;text-align:center;font-size:.92rem;padding:9px 14px;border-bottom:3px solid var(--gold)}
+.strip b{color:var(--gold)}
+.strip a{color:#fff;font-weight:700;margin-left:6px}
+.fpill{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:70;display:flex;align-items:center;gap:14px;
+  background:rgba(13,35,80,.97);color:#fff;border-radius:999px;padding:8px 8px 8px 20px;box-shadow:0 10px 30px rgba(0,0,0,.35);
+  width:max-content;max-width:calc(100% - 24px);margin-bottom:env(safe-area-inset-bottom)}
+.fpill .dot{width:11px;height:11px;border-radius:50%;background:#2ecc71;box-shadow:0 0 0 0 rgba(46,204,113,.6);animation:pulse 1.8s infinite;flex:none}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(46,204,113,0)}100%{box-shadow:0 0 0 0 rgba(46,204,113,0)}}
+.fpill .t{line-height:1.25}
+.fpill .t b{display:block;font-size:.98rem}
+.fpill .t a{color:#cfdaf2;font-size:.85rem;text-decoration:none}
+.fpill .go{background:var(--gold);color:var(--navy);font-weight:800;text-decoration:none;padding:12px 22px;border-radius:999px;white-space:nowrap}
+body{padding-bottom:90px}
+@media (prefers-reduced-motion:reduce){.fpill .dot{animation:none}}
+@media(max-width:380px){.fpill{gap:10px;padding-left:14px}.fpill .go{padding:11px 16px}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+
+<div class="strip">Voting is open until <b>8 December</b><span id="daysleft"></span> · check your IEEE email <a class="vote-link" href="#vote">Vote now ↗</a></div>
 
 <nav aria-label="Main">
   <div class="wrap">
@@ -400,7 +414,7 @@ footer p{margin:.4em 0}
   </div>
 </footer>
 
-<div class="mbar"><a class="v vote-link" href="#vote">Vote now ↗</a><a class="s" id="mb-wa" href="#share">Share</a></div>
+<div class="fpill" role="region" aria-label="Vote"><span class="dot"></span><span class="t"><b>Voting is open now</b><a href="#vote">How to vote →</a></span><a class="go vote-link" href="#vote">Vote now ↗</a></div>
 
 <div class="toast" id="toast" role="status"></div>
 
@@ -410,12 +424,16 @@ const VOTE_URL = "https://voting.vtools.ieee.org/";      // official IEEE ballot
 const SITE_URL = "https://deepaksigroha.github.io/AI/";      // public link of this page once shared
 /* ========================= */
 
+
+try{const end=new Date('2026-12-08T23:59:59+05:30');const d=Math.ceil((end-new Date())/864e5);
+const el=document.getElementById('daysleft');
+if(d>1)el.innerHTML=' · <b>'+d+' days left</b>';else if(d===1)el.innerHTML=' · <b>last day</b>';
+else{document.querySelector('.strip').style.display='none';document.querySelector('.fpill').style.display='none';}}catch(e){}
 const pageUrl = SITE_URL || location.href.split('#')[0];
 if (VOTE_URL) document.querySelectorAll('.vote-link').forEach(a => { a.href = VOTE_URL; a.target = "_blank"; a.rel = "noopener"; });
 
 const msg = "Please vote for Prof. Geetam Singh Tomar (SMIEEE, Chair, IEEE MP Section) for IEEE India Council Chair-Elect 2027. Voting closes 8 December. Details: " + pageUrl;
 document.getElementById('sh-wa').href = "https://wa.me/?text=" + encodeURIComponent(msg);
-const mbw=document.getElementById('mb-wa'); mbw.href=document.getElementById('sh-wa').href; mbw.target="_blank"; mbw.rel="noopener";
 document.getElementById('sh-li').href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(pageUrl);
 document.getElementById('sh-em').href = "mailto:?subject=" + encodeURIComponent("IEEE India Council Chair-Elect 2027 — Prof. G S Tomar") + "&body=" + encodeURIComponent(msg);
 ['sh-wa','sh-li'].forEach(id => { const a = document.getElementById(id); a.target = "_blank"; a.rel = "noopener"; });
