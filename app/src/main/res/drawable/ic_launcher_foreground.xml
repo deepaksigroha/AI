@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shield (privacy) containing a photo frame (image) with a magnifier (inspection) and check (authenticity). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- shield -->
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M54,24 L78,32 L78,52 C78,68 67,80 54,85 C41,80 30,68 30,52 L30,32 Z" />
+    <!-- photo frame -->
+    <path android:fillColor="#FF1E3A8A"
+        android:pathData="M40,40 h28 a2,2 0 0 1 2,2 v20 a2,2 0 0 1 -2,2 h-28 a2,2 0 0 1 -2,-2 v-20 a2,2 0 0 1 2,-2 z" />
+    <!-- mountains -->
+    <path android:fillColor="#FF7DD3FC"
+        android:pathData="M41,62 L50,50 L56,57 L60,53 L67,62 Z" />
+    <!-- sun -->
+    <path android:fillColor="#FFFDE68A"
+        android:pathData="M60,46 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <!-- magnifier ring -->
+    <path android:fillColor="#00000000" android:strokeColor="#FF0EA5E9" android:strokeWidth="3"
+        android:pathData="M66,66 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0" />
+    <!-- magnifier handle -->
+    <path android:fillColor="#00000000" android:strokeColor="#FF0EA5E9" android:strokeWidth="3.5"
+        android:strokeLineCap="round" android:pathData="M71,71 L76,76" />
+</vector>

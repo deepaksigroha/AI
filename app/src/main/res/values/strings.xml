@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ImageClean Pro</string>
+    <string name="app_subtitle">AI &amp; Metadata Inspector</string>
+    <string name="developer_credit">Developed by Deepak Sigroha</string>
+</resources>
