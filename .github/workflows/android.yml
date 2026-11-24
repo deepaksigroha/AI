@@ -2,7 +2,7 @@ name: Build ImageClean Pro
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, imageclean-pro ]
     tags: [ 'v*' ]
   pull_request:
   workflow_dispatch:
